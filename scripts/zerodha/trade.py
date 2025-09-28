@@ -1,8 +1,8 @@
 
 class Trade :
 
-    def __init__(self) :
-        pass 
+    def __init__(self, rule_engine) :
+        self.rule_engine = rule_engine
     
     def buy_order(self) :
         pass

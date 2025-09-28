@@ -1,7 +1,8 @@
 
 class Candels :
 
-    def __init__(self) :
+    def __init__(self, rule_engine) :
+        self.rule_engine = rule_engine
         self.required_candels = self.get_required_candels()
     
     def get_required_candels(self) :

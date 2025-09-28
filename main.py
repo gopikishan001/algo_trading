@@ -3,6 +3,7 @@ import os
 from scripts.zerodha.connect import ZerodhaConnector
 from datetime import time
 from scripts.utils.rule_engine import Rule_engine
+import yaml
 
 class TradingApp:
     def __init__(self):
@@ -24,8 +25,8 @@ class TradingApp:
         self.connected = True
 
 
-    def run(self):
-        self.rule_engine = Rule_engine(self.kite)
+    def run(self, config):
+        self.rule_engine = Rule_engine(self.kite, config)
         
         while self.rule_engine.is_market_open() :
             self.rule_engine.run()
@@ -33,9 +34,13 @@ class TradingApp:
 
                 
 if __name__ == "__main__":
+    
     app = TradingApp()
     app.connect_to_broker()
 
     if app.connected :
-        app.run()
+        with open("config.yaml", "r") as f:
+            config = yaml.safe_load(f)
+        
+        app.run(config)
         app.kite.logout()

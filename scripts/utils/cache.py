@@ -1,9 +1,10 @@
 
-from scripts.kite.fetch_data import fetch_data
+from scripts.zerodha.fetch_data import fetch_data
 
 class Cache :
 
-    def __init__(self) :
+    def __init__(self, rule_engine) :
+        self.rule_engine = rule_engine
         self.data = {}
         self.counter = 0
         self.open_trades = {}
@@ -15,10 +16,10 @@ class Cache :
         # key name : val indicator object from modules
     
     
-    def update(self, kite) :
+    def update(self) :
 
         self.counter += 1
 
         for symbol in self.required_symbols :
             if symbol not in self.data : self.data[symbol] = {}
-            self.data[symbol][self.counter] = fetch_data(kite, symbol)
+            self.data[symbol][self.counter] = fetch_data(self.rule_engine.kite, symbol)
